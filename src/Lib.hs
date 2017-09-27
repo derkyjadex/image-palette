@@ -18,13 +18,22 @@ data BinValue = BinValue Int Int Int Int deriving (Show)
 
 someFunc :: IO ()
 someFunc = do
-  readResult <- readImage "1.jpg"
+  args <- getArgs
+  let file = case args of
+        name : _ -> name
+        _ -> "1.jpg"
+  readResult <- readImage file
   case readResult of
     Left err -> putStrLn err
     Right image -> do
       putStrLn "Loaded!"
-      let i = convertRGB8 image
-      mapM_ putStrLn $ processImage i
+      let results = processImage $ convertRGB8 image
+      --mapM_ putStrLn results
+          a : b : c : _ = results
+          css = "body { background-color: " ++ a ++ "}" ++
+                ".a { background-color: " ++ b ++ "}" ++
+                ".b { background-color: " ++ c ++ "}"
+      writeFile "output.css" css
 
 processImage :: Image PixelRGB8 -> [String]
 processImage image =
