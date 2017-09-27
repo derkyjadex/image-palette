@@ -28,8 +28,8 @@ someFunc = do
     Right image -> do
       putStrLn "Loaded!"
       let results = processImage $ convertRGB8 image
-      --mapM_ putStrLn results
-          a : b : c : _ = results
+      mapM_ putStrLn results
+      let a : b : c : _ = results
           css = "body { background-color: " ++ a ++ "}" ++
                 ".a { background-color: " ++ b ++ "}" ++
                 ".b { background-color: " ++ c ++ "}"
